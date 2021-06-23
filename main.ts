@@ -15,6 +15,31 @@ const DEFAULT_SETTINGS: KrokiSettings = {
 export default class KrokiPlugin extends Plugin {
     settings: KrokiSettings;
 
+    diagrams = [
+        {prettyName: "BlockDiag", blockName: "blockdiag", description: "https://github.com/blockdiag/blockdiag", enabled: true},
+        {prettyName: "BPMN", blockName: "bpmn", description: "https://github.com/bpmn-io/bpmn-js", enabled: true},
+        {prettyName: "Bytefield", blockName: "bytefield", description: "https://github.com/Deep-Symmetry/bytefield-svg/", enabled: true},
+        {prettyName: "SeqDiag", blockName: "seqdiag", description: "https://github.com/blockdiag/seqdiag", enabled: true},
+        {prettyName: "ActDiag", blockName: "actdiag", description: "https://github.com/blockdiag/actdiag", enabled: true},
+        {prettyName: "NwDiag", blockName: "nwdiag", description: "https://github.com/blockdiag/nwdiag", enabled: true},
+        {prettyName: "PacketDiag", blockName: "packetdiag", description: "https://github.com/blockdiag/nwdiag", enabled: true},
+        {prettyName: "RackDiag", blockName: "rackdiag", description: "https://github.com/blockdiag/nwdiag", enabled: true},
+        {prettyName: "C4 with PlantUML", blockName: "c4plantuml", description: "https://github.com/RicardoNiepel/C4-PlantUML", enabled: true},
+        {prettyName: "Ditaa", blockName: "ditaa", description: "http://ditaa.sourceforge.net/", enabled: true},
+        {prettyName: "Erd", blockName: "erd", description: "https://github.com/BurntSushi/erd", enabled: true},
+        {prettyName: "Excalidraw", blockName: "excalidraw", description: "https://github.com/excalidraw/excalidraw", enabled: true},
+        {prettyName: "GraphViz", blockName: "graphviz", description: "https://www.graphviz.org/", enabled: true},
+        {prettyName: "Mermaid", blockName: "mermaid", description: "https://github.com/knsv/mermaid", enabled: false},
+        {prettyName: "Nomnoml", blockName: "nomnoml", description: "https://github.com/skanaar/nomnoml", enabled: true},
+        {prettyName: "Pikchr", blockName: "pikchr", description: "https://github.com/drhsqlite/pikchr", enabled: true},
+        {prettyName: "PlantUML", blockName: "plantuml", description: "https://github.com/plantuml/plantuml", enabled: false},
+        {prettyName: "Svgbob", blockName: "svgbob", description: "https://github.com/ivanceras/svgbob", enabled: true},
+        {prettyName: "UMlet", blockName: "umlet", description: "https://github.com/umlet/umlet", enabled: true},
+        {prettyName: "Vega", blockName: "vega", description: "https://github.com/vega/vega", enabled: true},
+        {prettyName: "Vega-Lite", blockName: "vegalite", description: "https://github.com/vega/vega-lite", enabled: true},
+        {prettyName: "WaveDrom", blockName: "wavedrom", description: "https://github.com/wavedrom/wavedrom", enabled: true}
+    ];
+
     svgProcessor = async (diagType: string, source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
         const dest = document.createElement('img');
         const prefix = this.settings.server_url + diagType + "/svg/";
@@ -88,6 +113,9 @@ export default class KrokiPlugin extends Plugin {
     svgbobProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
         this.svgProcessor("svgbob", source, el, _)
     }
+    umletProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
+        this.svgProcessor("umlet", source, el, _)
+    }
     vegaProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
         this.svgProcessor("vega", source, el, _)
     }
@@ -120,6 +148,7 @@ export default class KrokiPlugin extends Plugin {
         this.registerMarkdownCodeBlockProcessor("pikchr", this.pikchrProcessor);
         this.registerMarkdownCodeBlockProcessor("plantuml", this.plantumlProcessor);
         this.registerMarkdownCodeBlockProcessor("svgbob", this.svgbobProcessor);
+        this.registerMarkdownCodeBlockProcessor("umlet", this.umletProcessor);
         this.registerMarkdownCodeBlockProcessor("vega", this.vegaProcessor);
         this.registerMarkdownCodeBlockProcessor("vegalite", this.vegaliteProcessor);
         this.registerMarkdownCodeBlockProcessor("wavedrom", this.wavedromProcessor);
