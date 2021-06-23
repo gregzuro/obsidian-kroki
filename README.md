@@ -19,7 +19,7 @@ See [kroki-test.md](kroki-test.md) for examples of each of the currently support
 
 ## Installation
 
-### Inside Obsidian (TBD)
+### Inside Obsidian
 
 `Settings > Third-party plugins > Community Plugins > Browse` and search for `Kroki`.
 
