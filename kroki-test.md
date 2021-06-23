@@ -1456,6 +1456,14 @@ Svgbob
                                 /::::/ |__| 
 ```
 
+UMlet (https://gitter.im/kroki-project/community?at=5fa9255d7cac87158f96c750)
+```umlet
+<?xml version="1.0" encoding="UTF-8"?><umlet_diagram><element><type>com.umlet.element.base.Class</type><coordinates><x>80</x><y>250</y><w>110</w><h>40</h></coordinates><panel_attributes>&lt;&lt;artefact&gt;&gt;
+Name</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Artefact</type><coordinates><x>80</x><y>180</y><w>110</w><h>50</h></coordinates><panel_attributes>Name</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>20</x><y>20</y><w>250</w><h>330</h></coordinates><panel_attributes>&gt;&lt;&lt;device&gt;&gt;
+&gt;Server</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>40</x><y>100</y><w>200</w><h>220</h></coordinates><panel_attributes>&gt;&lt;&lt;execution environment&gt;&gt;
+&gt;AppServer</panel_attributes><additional_attributes></additional_attributes></element></umlet_diagram>
+```
+
 Vega
 ```vega
 {
