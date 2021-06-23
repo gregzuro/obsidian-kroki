@@ -35,67 +35,67 @@ export default class KrokiPlugin extends Plugin {
     };
 
     blockdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("blockdiag", source, el, _)
+        this.svgProcessor("blockdiag", source, el, _)
     }
     bpmnProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("bpmn", source, el, _)
+        this.svgProcessor("bpmn", source, el, _)
     }
     bytefieldProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("bytefield", source, el, _)
+        this.svgProcessor("bytefield", source, el, _)
     }
     seqdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("seqdiag", source, el, _)
+        this.svgProcessor("seqdiag", source, el, _)
     }
     actdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("actdiag", source, el, _)
+        this.svgProcessor("actdiag", source, el, _)
     }
     nwdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("nwdiag", source, el, _)
+        this.svgProcessor("nwdiag", source, el, _)
     }
     packetdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("packetdiag", source, el, _)
+        this.svgProcessor("packetdiag", source, el, _)
     }
     rackdiagProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("rackdiag", source, el, _)
+        this.svgProcessor("rackdiag", source, el, _)
     }
     c4plantumlProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("c4plantuml", source, el, _)
+        this.svgProcessor("c4plantuml", source, el, _)
     }
     ditaaProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("ditaa", source, el, _)
+        this.svgProcessor("ditaa", source, el, _)
     }
     erdProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("erd", source, el, _)
+        this.svgProcessor("erd", source, el, _)
     }
     excalidrawProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("excalidraw", source, el, _)
+        this.svgProcessor("excalidraw", source, el, _)
     }
     graphvizProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("graphviz", source, el, _)
+        this.svgProcessor("graphviz", source, el, _)
     }
     mermaidProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("mermaid", source, el, _)
+        this.svgProcessor("mermaid", source, el, _)
     }
     nomnomlProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("nomnoml", source, el, _)
+        this.svgProcessor("nomnoml", source, el, _)
     }
     pikchrProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("pikchr", source, el, _)
+        this.svgProcessor("pikchr", source, el, _)
     }
     plantumlProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("plantuml", source, el, _)
+        this.svgProcessor("plantuml", source, el, _)
     }
     svgbobProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("svgbob", source, el, _)
+        this.svgProcessor("svgbob", source, el, _)
     }
     vegaProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("vega", source, el, _)
+        this.svgProcessor("vega", source, el, _)
     }
     vegaliteProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("vegalite", source, el, _)
+        this.svgProcessor("vegalite", source, el, _)
     }
     wavedromProcessor = async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        this.pngProcessor("wavedrom", source, el, _)
+        this.svgProcessor("wavedrom", source, el, _)
     }
 
     async onload(): Promise<void> {
