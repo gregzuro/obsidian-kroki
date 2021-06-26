@@ -110,6 +110,19 @@ class KrokiSettingsTab extends PluginSettingTab {
         this.plugin = plugin;
     }
 
+    diagramTypeUrl(blockName: string, url: string) {
+        let fragment = document.createDocumentFragment();
+        let a = document.createElement('a');
+        a.textContent = url
+        a.setAttribute("href", url);
+        fragment.append("Use `");
+        fragment.append(blockName);
+        fragment.append("`. ");
+        fragment.append("More info: ");
+        fragment.append(a);
+        return fragment;
+    }
+
     display(): void {
         const {containerEl} = this;
 
@@ -152,7 +165,7 @@ class KrokiSettingsTab extends PluginSettingTab {
         for (var i=0; i<this.plugin.settings.diagramTypes.length; i++){
             new Setting(containerEl)
             .setName(this.plugin.settings.diagramTypes[i].prettyName)
-            .setDesc("Use `"+this.plugin.settings.diagramTypes[i].blockName+"`.")
+            .setDesc(this.diagramTypeUrl(this.plugin.settings.diagramTypes[i].blockName, this.plugin.settings.diagramTypes[i].url))
             .addToggle((t) => {
                 t.setValue(this.plugin.settings.diagramTypes[i].enabled);
                 t.onChange(async (v) => {
