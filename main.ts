@@ -1,4 +1,3 @@
-import { link } from 'fs';
 import {App, MarkdownPostProcessorContext, Plugin, PluginSettingTab, Setting, ToggleComponent} from 'obsidian';
 
 import * as pako from 'pako';
@@ -46,6 +45,14 @@ const DEFAULT_SETTINGS: KrokiSettings = {
 
 }
 
+function textEncode(str: string) {
+    var utf8 = unescape(encodeURIComponent(str));
+    var result = new Uint8Array(utf8.length);
+    for (var i = 0; i < utf8.length; i++) {
+      result[i] = utf8.charCodeAt(i);
+    }
+    return result;
+  }
 export default class KrokiPlugin extends Plugin {
     settings: KrokiSettings;
 
@@ -55,8 +62,8 @@ export default class KrokiPlugin extends Plugin {
         source = source.replace(/&nbsp;/gi, " ");
 
         // encode the source 
-        // https://docs.kroki.io/kroki/setup/encode-diagram/#nodejs
-        const data = Buffer.from(source, 'utf8');
+        // per: https://docs.kroki.io/kroki/setup/encode-diagram/#javascript '-ish'
+        const data = textEncode(source);
         const compressed = pako.deflate(data, { level: 9 });
         const encodedSource = Buffer.from(compressed)
           .toString('base64')
@@ -79,7 +86,7 @@ export default class KrokiPlugin extends Plugin {
             if (diagramType.enabled === true) {
                 console.log("kroki is     enabling: " + diagramType.prettyName);
                 this.registerMarkdownCodeBlockProcessor(diagramType.blockName,
-                    async (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
+                    (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
                         this.svgProcessor(diagramType.blockName, source, el, _)
                     })
             } else {
@@ -163,28 +170,30 @@ class KrokiSettingsTab extends PluginSettingTab {
     
         // loop through all the diagram types
         for (var i=0; i<this.plugin.settings.diagramTypes.length; i++){
+            let diagramType = this.plugin.settings.diagramTypes[i];
             new Setting(containerEl)
-            .setName(this.plugin.settings.diagramTypes[i].prettyName)
-            .setDesc(this.diagramTypeUrl(this.plugin.settings.diagramTypes[i].blockName, this.plugin.settings.diagramTypes[i].url))
+            .setName(diagramType.prettyName)
+            .setDesc(this.diagramTypeUrl(diagramType.blockName, diagramType.url))
             .addToggle((t) => {
-                t.setValue(this.plugin.settings.diagramTypes[i].enabled);
+                t.setValue(diagramType.enabled);
                 t.onChange(async (v) => {
                     // figure out which one has changed
-                    for (var i=0; i<this.plugin.settings.diagramTypes.length; i++){
-                        if (this.plugin.settings.diagramTypes[i].enabled != this.plugin.settings.diagramTypes[i].toggle.getValue()) {
-                            if (this.plugin.settings.diagramTypes[i].toggle.getValue() === true) {
-                                console.log("kroki is     enabling:", this.plugin.settings.diagramTypes[i].prettyName)
+                    for (var j=0; j<this.plugin.settings.diagramTypes.length; j++){
+                        let diagramType = this.plugin.settings.diagramTypes[j];
+                        if (diagramType.enabled != diagramType.toggle.getValue()) {
+                            if (diagramType.toggle.getValue() === true) {
+                                console.log("kroki is     enabling:", diagramType.prettyName)
                             } else {
-                                console.log("kroki is    disabling:", this.plugin.settings.diagramTypes[i].prettyName)
+                                console.log("kroki is    disabling:", diagramType.prettyName)
                             }
                         // change the setting
-                        this.plugin.settings.diagramTypes[i].enabled = this.plugin.settings.diagramTypes[i].toggle.getValue();
+                        diagramType.enabled = diagramType.toggle.getValue();
                         await this.plugin.saveSettings();
                         }
                     }
                 });
                 // save the control for this diagram along with the diagram's other data
-                this.plugin.settings.diagramTypes[i].toggle = t;
+                diagramType.toggle = t;
             }); 
         }
     }
