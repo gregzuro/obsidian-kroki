@@ -45,14 +45,6 @@ const DEFAULT_SETTINGS: KrokiSettings = {
 
 }
 
-function textEncode(str: string) {
-    var utf8 = unescape(encodeURIComponent(str));
-    var result = new Uint8Array(utf8.length);
-    for (var i = 0; i < utf8.length; i++) {
-      result[i] = utf8.charCodeAt(i);
-    }
-    return result;
-  }
 export default class KrokiPlugin extends Plugin {
     settings: KrokiSettings;
 
@@ -62,8 +54,8 @@ export default class KrokiPlugin extends Plugin {
         source = source.replace(/&nbsp;/gi, " ");
 
         // encode the source 
-        // per: https://docs.kroki.io/kroki/setup/encode-diagram/#javascript '-ish'
-        const data = textEncode(source);
+        // per: https://docs.kroki.io/kroki/setup/encode-diagram/#javascript
+        const data = new TextEncoder().encode(source);
         const compressed = pako.deflate(data, { level: 9 });
         const encodedSource = Buffer.from(compressed)
           .toString('base64')
@@ -177,20 +169,8 @@ class KrokiSettingsTab extends PluginSettingTab {
             .addToggle((t) => {
                 t.setValue(diagramType.enabled);
                 t.onChange(async (v) => {
-                    // figure out which one has changed
-                    for (var j=0; j<this.plugin.settings.diagramTypes.length; j++){
-                        let diagramType = this.plugin.settings.diagramTypes[j];
-                        if (diagramType.enabled != diagramType.toggle.getValue()) {
-                            if (diagramType.toggle.getValue() === true) {
-                                console.log("kroki is     enabling:", diagramType.prettyName)
-                            } else {
-                                console.log("kroki is    disabling:", diagramType.prettyName)
-                            }
-                        // change the setting
-                        diagramType.enabled = diagramType.toggle.getValue();
-                        await this.plugin.saveSettings();
-                        }
-                    }
+                    diagramType.enabled = v;
+                    await this.plugin.saveSettings();
                 });
                 // save the control for this diagram along with the diagram's other data
                 diagramType.toggle = t;
