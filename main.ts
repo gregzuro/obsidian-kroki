@@ -49,7 +49,7 @@ export default class KrokiPlugin extends Plugin {
     settings: KrokiSettings;
 
     svgProcessor = async (diagType: string, source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-        const dest = document.createElement('img');
+        const dest = document.createElement('div');
         const urlPrefix = this.settings.server_url + diagType + "/svg/";
         source = source.replace(/&nbsp;/gi, " ");
 
@@ -61,9 +61,18 @@ export default class KrokiPlugin extends Plugin {
           .toString('base64')
           .replace(/\+/g, '-').replace(/\//g, '_');
 
-        // create the URL
-        dest.src = urlPrefix + encodedSource;
+        const img = document.createElement("img");
+        img.src = urlPrefix + encodedSource;
+        img.useMap = "#" + encodedSource;
 
+        const result = await fetch(urlPrefix + encodedSource, {
+            method: "GET"
+        });
+
+        if(result.ok) {
+            dest.innerHTML = await result.text();
+            dest.children[0].setAttr("name", encodedSource);
+        }
         el.appendChild(dest);
     };
 

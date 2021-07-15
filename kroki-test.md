@@ -1433,7 +1433,7 @@ line right until even with X9 - ($r,0) \
   
 PlantUML
 ```plantuml
-Bob -> Alice : hello 
+Bob -> Alice : hello [[https://www.google.com]]
 Alice -> Wander: hello
 Wonderland -> next: hello
 next -> Last: hello
