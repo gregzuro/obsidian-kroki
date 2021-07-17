@@ -1345,7 +1345,7 @@ digraph D {
 ```
 
 Mermaid
-```mermaid
+```kroki-mermaid
 graph TD 
   A[ Anyone ] -->|Can help | B( Go to github.com/yuzutech/kroki )
   B --> C{ How to contribute? }
@@ -1432,7 +1432,7 @@ line right until even with X9 - ($r,0) \
 ```
   
 PlantUML
-```plantuml
+```kroki-plantuml
 Bob -> Alice : hello [[https://www.google.com]]
 Alice -> Wander: hello
 Wonderland -> next: hello
