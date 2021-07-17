@@ -7,7 +7,8 @@ interface KrokiSettings {
     header: string;
     diagramTypes: {
         prettyName: string;
-        blockName: string;
+        krokiBlockName: string;
+        obsidianBlockName: string;
         description: string;
         url: string;
         enabled: boolean;
@@ -19,28 +20,28 @@ const DEFAULT_SETTINGS: KrokiSettings = {
     server_url: 'https://kroki.io/',
     header: '',
     diagramTypes: [
-        {prettyName: "BlockDiag", blockName: "blockdiag", description: "block diag !!", url: "https://github.com/blockdiag/blockdiag", enabled: true, toggle: null},
-        {prettyName: "BPMN", blockName: "bpmn", description: "", url: "https://github.com/bpmn-io/bpmn-js", enabled: true, toggle: null},
-        {prettyName: "Bytefield", blockName: "bytefield", description: "", url: "https://github.com/Deep-Symmetry/bytefield-svg/", enabled: true, toggle: null},
-        {prettyName: "SeqDiag", blockName: "seqdiag", description: "", url: "https://github.com/blockdiag/seqdiag", enabled: true, toggle: null},
-        {prettyName: "ActDiag", blockName: "actdiag", description: "", url: "https://github.com/blockdiag/actdiag", enabled: true, toggle: null},
-        {prettyName: "NwDiag", blockName: "nwdiag", description: "Nw Diag !!!", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
-        {prettyName: "PacketDiag", blockName: "packetdiag", description: "", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
-        {prettyName: "RackDiag", blockName: "rackdiag", description: "", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
-        {prettyName: "C4 with PlantUML", blockName: "c4plantuml", description: "", url: "https://github.com/RicardoNiepel/C4-PlantUML", enabled: true, toggle: null},
-        {prettyName: "Ditaa", blockName: "ditaa", description: "", url: "http://ditaa.sourceforge.net/", enabled: true, toggle: null},
-        {prettyName: "Erd", blockName: "erd", description: "", url: "https://github.com/BurntSushi/erd", enabled: true, toggle: null},
-        {prettyName: "Excalidraw", blockName: "excalidraw", description: "", url: "https://github.com/excalidraw/excalidraw", enabled: true, toggle: null},
-        {prettyName: "GraphViz", blockName: "graphviz", description: "", url: "https://www.graphviz.org/", enabled: true, toggle: null},
-        {prettyName: "Mermaid", blockName: "mermaid", description: "", url: "https://github.com/knsv/mermaid", enabled: false, toggle: null},
-        {prettyName: "Nomnoml", blockName: "nomnoml", description: "", url: "https://github.com/skanaar/nomnoml", enabled: true, toggle: null},
-        {prettyName: "Pikchr", blockName: "pikchr", description: "", url: "https://github.com/drhsqlite/pikchr", enabled: true, toggle: null},
-        {prettyName: "PlantUML", blockName: "plantuml", description: "", url: "https://github.com/plantuml/plantuml", enabled: false, toggle: null},
-        {prettyName: "Svgbob", blockName: "svgbob", description: "", url: "https://github.com/ivanceras/svgbob", enabled: true, toggle: null},
-        {prettyName: "UMlet", blockName: "umlet", description: "", url: "https://github.com/umlet/umlet", enabled: true, toggle: null},
-        {prettyName: "Vega", blockName: "vega", description: "", url: "https://github.com/vega/vega", enabled: true, toggle: null},
-        {prettyName: "Vega-Lite", blockName: "vegalite", description: "", url: "https://github.com/vega/vega-lite", enabled: true, toggle: null},
-        {prettyName: "WaveDrom", blockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null}
+        {prettyName: "BlockDiag", krokiBlockName: "blockdiag", obsidianBlockName: "blockdiag", description: "block diag !!", url: "https://github.com/blockdiag/blockdiag", enabled: true, toggle: null},
+        {prettyName: "BPMN", krokiBlockName: "bpmn", obsidianBlockName: "bpmn", description: "", url: "https://github.com/bpmn-io/bpmn-js", enabled: true, toggle: null},
+        {prettyName: "Bytefield", krokiBlockName: "bytefield", obsidianBlockName: "bytefield", description: "", url: "https://github.com/Deep-Symmetry/bytefield-svg/", enabled: true, toggle: null},
+        {prettyName: "SeqDiag", krokiBlockName: "seqdiag", obsidianBlockName: "seqdiag", description: "", url: "https://github.com/blockdiag/seqdiag", enabled: true, toggle: null},
+        {prettyName: "ActDiag", krokiBlockName: "actdiag", obsidianBlockName: "actdiag", description: "", url: "https://github.com/blockdiag/actdiag", enabled: true, toggle: null},
+        {prettyName: "NwDiag", krokiBlockName: "nwdiag", obsidianBlockName: "nwdiag", description: "Nw Diag !!!", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
+        {prettyName: "PacketDiag", krokiBlockName: "packetdiag", obsidianBlockName: "packetdiag", description: "", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
+        {prettyName: "RackDiag", krokiBlockName: "rackdiag", obsidianBlockName: "rackdiag", description: "", url: "https://github.com/blockdiag/nwdiag", enabled: true, toggle: null},
+        {prettyName: "C4 with PlantUML", krokiBlockName: "c4plantuml", obsidianBlockName: "c4plantuml", description: "", url: "https://github.com/RicardoNiepel/C4-PlantUML", enabled: true, toggle: null},
+        {prettyName: "Ditaa", krokiBlockName: "ditaa", obsidianBlockName: "ditaa", description: "", url: "http://ditaa.sourceforge.net/", enabled: true, toggle: null},
+        {prettyName: "Erd", krokiBlockName: "erd", obsidianBlockName: "erd", description: "", url: "https://github.com/BurntSushi/erd", enabled: true, toggle: null},
+        {prettyName: "Excalidraw", krokiBlockName: "excalidraw", obsidianBlockName: "excalidraw", description: "", url: "https://github.com/excalidraw/excalidraw", enabled: true, toggle: null},
+        {prettyName: "GraphViz", krokiBlockName: "graphviz", obsidianBlockName: "graphviz", description: "", url: "https://www.graphviz.org/", enabled: true, toggle: null},
+        {prettyName: "Mermaid", krokiBlockName: "mermaid", obsidianBlockName: "mermaid", description: "", url: "https://github.com/knsv/mermaid", enabled: false, toggle: null},
+        {prettyName: "Nomnoml", krokiBlockName: "nomnoml", obsidianBlockName: "nomnoml", description: "", url: "https://github.com/skanaar/nomnoml", enabled: true, toggle: null},
+        {prettyName: "Pikchr", krokiBlockName: "pikchr", obsidianBlockName: "pikchr", description: "", url: "https://github.com/drhsqlite/pikchr", enabled: true, toggle: null},
+        {prettyName: "PlantUML", krokiBlockName: "plantuml", obsidianBlockName: "plantuml", description: "", url: "https://github.com/plantuml/plantuml", enabled: false, toggle: null},
+        {prettyName: "Svgbob", krokiBlockName: "svgbob", obsidianBlockName: "svgbob", description: "", url: "https://github.com/ivanceras/svgbob", enabled: true, toggle: null},
+        {prettyName: "UMlet", krokiBlockName: "umlet", obsidianBlockName: "umlet", description: "", url: "https://github.com/umlet/umlet", enabled: true, toggle: null},
+        {prettyName: "Vega", krokiBlockName: "vega", obsidianBlockName: "vega", description: "", url: "https://github.com/vega/vega", enabled: true, toggle: null},
+        {prettyName: "Vega-Lite", krokiBlockName: "vegalite", obsidianBlockName: "vegalite", description: "", url: "https://github.com/vega/vega-lite", enabled: true, toggle: null},
+        {prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null}
     ]
 
 }
@@ -86,9 +87,9 @@ export default class KrokiPlugin extends Plugin {
         for (let diagramType of this.settings.diagramTypes) {
             if (diagramType.enabled === true) {
                 console.log("kroki is     enabling: " + diagramType.prettyName);
-                this.registerMarkdownCodeBlockProcessor(diagramType.blockName,
+                this.registerMarkdownCodeBlockProcessor(diagramType.obsidianBlockName,
                     (source: string, el: HTMLElement, _: MarkdownPostProcessorContext) => {
-                        this.svgProcessor(diagramType.blockName, source, el, _)
+                        this.svgProcessor(diagramType.krokiBlockName, source, el, _)  // this name is used to build the url, so it must be the kroki one
                     })
             } else {
                 console.log("kroki is not enabling:", diagramType.prettyName);
@@ -123,10 +124,7 @@ class KrokiSettingsTab extends PluginSettingTab {
         let a = document.createElement('a');
         a.textContent = url
         a.setAttribute("href", url);
-        fragment.append("Use `");
-        fragment.append(blockName);
-        fragment.append("`. ");
-        fragment.append("More info: ");
+
         fragment.append(a);
         return fragment;
     }
@@ -166,15 +164,21 @@ class KrokiSettingsTab extends PluginSettingTab {
             );
 
             this.containerEl.createEl("h3", {
-                text: "Diagram Types (changes require a re-load)",
+                text: "Diagram Type (enable and 'language')",
             });
-    
+            this.containerEl.createEl("p", {
+                text: "Enable each diagram type individually. If there are multiple possible processors for a given type, then you can specify an alternate name for the diagram's 'language'",
+            });
+            this.containerEl.createEl("p", {
+                text: "NB that any changes here will require a re-load before becoming effective.",
+            });
+
         // loop through all the diagram types
         for (var i=0; i<this.plugin.settings.diagramTypes.length; i++){
             let diagramType = this.plugin.settings.diagramTypes[i];
-            new Setting(containerEl)
-            .setName(diagramType.prettyName)
-            .setDesc(this.diagramTypeUrl(diagramType.blockName, diagramType.url))
+            new Setting(containerEl).setName(diagramType.prettyName)
+            .setDesc(this.diagramTypeUrl(diagramType.krokiBlockName, diagramType.url))
+
             .addToggle((t) => {
                 t.setValue(diagramType.enabled);
                 t.onChange(async (v) => {
@@ -183,7 +187,15 @@ class KrokiSettingsTab extends PluginSettingTab {
                 });
                 // save the control for this diagram along with the diagram's other data
                 diagramType.toggle = t;
-            }); 
+            })
+
+            .addText(text => {
+                text.setValue(diagramType.obsidianBlockName)
+                    .onChange(async (value) => {
+                        diagramType.obsidianBlockName = value;
+                        await this.plugin.saveSettings();
+                    });
+            });
         }
     }
 }

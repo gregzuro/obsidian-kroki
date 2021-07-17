@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-kroki",
 	"name": "Kroki",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"minAppVersion": "0.11.5",
 	"description": "Render Kroki Diagrams",
 	"author": "Greg Zuro",
