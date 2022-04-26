@@ -144,7 +144,7 @@ class KrokiSettingsTab extends PluginSettingTab {
             .addText(text => text.setPlaceholder(DEFAULT_SETTINGS.server_url)
                 .setValue(this.plugin.settings.server_url)
                 .onChange(async (value) => {
-                        this.plugin.settings.server_url = value;
+                        this.plugin.settings.server_url = ensureTrailingSlash(value);
                         await this.plugin.saveSettings();
                     }
                 )
@@ -199,4 +199,11 @@ class KrokiSettingsTab extends PluginSettingTab {
             });
         }
     }
+}
+
+function ensureTrailingSlash(url: string) : string {
+    if (!url.endsWith('/')) {
+        return url + '/';
+    }
+    return url;
 }
