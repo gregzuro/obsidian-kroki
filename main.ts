@@ -43,6 +43,7 @@ const DEFAULT_SETTINGS: KrokiSettings = {
         { prettyName: "UMlet", krokiBlockName: "umlet", obsidianBlockName: "umlet", description: "", url: "https://github.com/umlet/umlet", enabled: true, toggle: null },
         { prettyName: "Vega", krokiBlockName: "vega", obsidianBlockName: "vega", description: "", url: "https://github.com/vega/vega", enabled: true, toggle: null },
         { prettyName: "Vega-Lite", krokiBlockName: "vegalite", obsidianBlockName: "vegalite", description: "", url: "https://github.com/vega/vega-lite", enabled: true, toggle: null },
+        { prettyName: "D2", krokiBlockName: "d2", obsidianBlockName: "d2", description: "", url: "https://github.com/terrastruct/d2", enabled: true, toggle: null },
         { prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null }
     ]
 
