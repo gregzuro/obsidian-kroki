@@ -43,8 +43,7 @@ const DEFAULT_SETTINGS: KrokiSettings = {
         { prettyName: "UMlet", krokiBlockName: "umlet", obsidianBlockName: "umlet", description: "", url: "https://github.com/umlet/umlet", enabled: true, toggle: null },
         { prettyName: "Vega", krokiBlockName: "vega", obsidianBlockName: "vega", description: "", url: "https://github.com/vega/vega", enabled: true, toggle: null },
         { prettyName: "Vega-Lite", krokiBlockName: "vegalite", obsidianBlockName: "vegalite", description: "", url: "https://github.com/vega/vega-lite", enabled: true, toggle: null },
-        { prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null },
-				{ prettyName: "WireViz", krokiBlockName: "wireviz", obsidianBlockName: "wireviz", description: "", url: "https://github.com/formatc1702/WireViz", enabled: true, toggle: null }
+        { prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null }
     ]
 
 }
