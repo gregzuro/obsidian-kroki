@@ -1787,7 +1787,7 @@ Vega-Lite
 ```
 
 D2
-```
+```d2
 D2 Parser: {
   shape: class
 
@@ -1821,4 +1821,34 @@ WaveDrom
   {},
   { name: "Acknowledge", wave: "1.....|01." }
 ]}
+```
+
+WireViz
+```wireviz
+connectors:
+  X1:
+    type: D-Sub
+    subtype: female
+    pinlabels: [DCD, RX, TX, DTR, GND, DSR, RTS, CTS, RI]
+  X2:
+    type: Molex KK 254
+    subtype: female
+    pinlabels: [GND, RX, TX]
+
+cables:
+  W1:
+    gauge: 0.25 mm2
+    length: 0.2
+    color_code: DIN
+    wirecount: 3
+    shield: true
+
+connections:
+  -
+    - X1: [5,2,3]
+    - W1: [1,2,3]
+    - X2: [1,3,2]
+  -
+    - X1: 5
+    - W1: s
 ```
