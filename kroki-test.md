@@ -1786,6 +1786,32 @@ Vega-Lite
 }
 ```
 
+D2
+```d2
+D2 Parser: {
+  shape: class
+
+  # Default visibility is + so no need to specify.
+  +reader: io.RuneReader
+  readerPos: d2ast.Position
+
+  # Private field.
+  -lookahead: "[]rune"
+
+  # Protected field.
+  # We have to escape the # to prevent the line from being parsed as a comment.
+  \#lookaheadPos: d2ast.Position
+
+  +peek(): (r rune, eof bool)
+  rewind()
+  commit()
+
+  \#peekn(n int): (s string, eof bool)
+}
+
+"github.com/terrastruct/d2parser.git" -> D2 Parser
+```
+
 WaveDrom
 ```wavedrom
 { signal: [
@@ -1795,4 +1821,34 @@ WaveDrom
   {},
   { name: "Acknowledge", wave: "1.....|01." }
 ]}
+```
+
+WireViz
+```wireviz
+connectors:
+  X1:
+    type: D-Sub
+    subtype: female
+    pinlabels: [DCD, RX, TX, DTR, GND, DSR, RTS, CTS, RI]
+  X2:
+    type: Molex KK 254
+    subtype: female
+    pinlabels: [GND, RX, TX]
+
+cables:
+  W1:
+    gauge: 0.25 mm2
+    length: 0.2
+    color_code: DIN
+    wirecount: 3
+    shield: true
+
+connections:
+  -
+    - X1: [5,2,3]
+    - W1: [1,2,3]
+    - X2: [1,3,2]
+  -
+    - X1: 5
+    - W1: s
 ```
