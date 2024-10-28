@@ -1,5 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import {nodeResolve} from '@rollup/plugin-node-resolve';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 import commonjs from '@rollup/plugin-commonjs';
 
 const banner = 
@@ -22,6 +23,7 @@ export default {
   plugins: [
     typescript(),
     nodeResolve({browser: true}),
+    nodePolyfills(),
     commonjs(),
   ]
 };

@@ -16,14 +16,15 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^6.0.0",
     "@types/node": "^14.14.2",
+    "@types/pako": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "eslint": "^7.22.0",
     "obsidian": "https://github.com/obsidianmd/obsidian-api/tarball/master",
+    "pako": "^1.0.10",
     "rollup": "^2.32.1",
+    "rollup-plugin-polyfill-node": "^0.13.0",
     "tslib": "^2.0.3",
-    "typescript": "^4.0.3",
-    "@types/pako": "^1.0.1",
-    "pako": "^1.0.10"
+    "typescript": "^4.0.3"
   }
 }

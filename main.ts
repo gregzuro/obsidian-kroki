@@ -1,4 +1,5 @@
 import { App, MarkdownPostProcessorContext, Plugin, PluginSettingTab, Setting, ToggleComponent, request } from 'obsidian';
+import { Buffer } from 'buffer';
 
 import * as pako from 'pako';
 
