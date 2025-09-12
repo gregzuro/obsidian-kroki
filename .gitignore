@@ -12,3 +12,8 @@ main.js
 
 # data / settings
 data.json
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
