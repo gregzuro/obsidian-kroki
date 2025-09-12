@@ -45,7 +45,8 @@ const DEFAULT_SETTINGS: KrokiSettings = {
         { prettyName: "Vega-Lite", krokiBlockName: "vegalite", obsidianBlockName: "vegalite", description: "", url: "https://github.com/vega/vega-lite", enabled: true, toggle: null },
         { prettyName: "D2", krokiBlockName: "d2", obsidianBlockName: "d2", description: "", url: "https://github.com/terrastruct/d2", enabled: true, toggle: null },
         { prettyName: "WireViz", krokiBlockName: "wireviz", obsidianBlockName: "wireviz", description: "", url: "https://github.com/formatc1702/WireViz", enabled: true, toggle: null },
-        { prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null }
+        { prettyName: "WaveDrom", krokiBlockName: "wavedrom", obsidianBlockName: "wavedrom", description: "", url: "https://github.com/wavedrom/wavedrom", enabled: true, toggle: null },
+        { prettyName: "tikz", krokiBlockName: "tikz", obsidianBlockName: "tikz", description: "", url: "https://github.com/pgf-tikz/pgf", enabled: true, toggle: null }
     ]
 
 }
