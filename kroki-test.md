@@ -1852,3 +1852,418 @@ connections:
     - X1: 5
     - W1: s
 ```
+
+TiKz
+```tikz
+\documentclass[border=3pt,tikz]{standalone}
+\usepackage{physics}
+\usepackage{xcolor}
+\usetikzlibrary{decorations.markings}
+\tikzset{>=latex} % for LaTeX arrow head
+
+\colorlet{Ecol}{orange!90!black}
+\colorlet{Bcol}{violet!90}
+\colorlet{Icol}{blue!70!black}
+\colorlet{gausscol}{green!40!black}
+\colorlet{gausscol2}{green!45!blue}
+\tikzstyle{current}=[->,Icol,thick]
+\colorlet{pluscol}{red!60!black}
+\colorlet{minuscol}{blue!60!black}
+\tikzstyle{anode}=[top color=red!20,bottom color=red!50,shading angle=20]
+\tikzstyle{cathode}=[top color=blue!20,bottom color=blue!40,shading angle=20]
+\tikzstyle{gauss surf}=[gausscol,top color=green!2,bottom color=green!80!black!70,shading angle=5,fill opacity=0.4]
+\tikzstyle{metal}=[top color=black!15,bottom color=black!25,middle color=black!20,shading angle=10]
+\tikzstyle{mydashes}=[dash pattern=on 1 off 1]
+\tikzset{
+  EFieldLine/.style={thick,Ecol,line cap=round,decoration={markings,
+                     mark=at position #1 with {\arrow{latex}}},
+                     postaction={decorate}},
+  BFieldLine/.style={thick,Bcol,postaction={decorate},decoration={markings,
+                     mark=at position #1 with {\arrow{latex}},
+                     mark=at position #1+0.5 with {\arrow{latex}}}},
+  EFieldLine/.default=0.5,
+  BFieldLine/.default=0.4}
+\usetikzlibrary{3d}
+
+\begin{document}
+
+
+% CAPACITOR 3D - displacement current derivation
+\begin{tikzpicture}[xscale=0.42]
+  
+  \def\RC{1.2}     % radius capacitor
+  \def\RW{0.1*\RC} % radius wire
+  \def\RA{1.6}     % radius ampere loop
+  \def\D{2.6*\RA}  % distance between plates
+  \def\T{0.4}      % plate thickness
+  \def\L{2*\RA}    % wire length
+  \def\NE{5}       % number of electric field lines
+  
+  % CATHODE WIRE
+  \draw[metal]
+    (\D+\T,\RW) --++ (\L,0) arc (90:-90:\RW) --++ (-\L,0);
+  
+  % CATHODE
+  \draw[cathode,top color=blue!90!black!30,bottom color=blue!80!black!50]
+    (\D,\RC) --++ (\T,0) arc (90:-90:\RC) --++ (-\T,0);
+  \draw[cathode] (\D,0) circle (\RC);
+  
+  % ELECTRIC FIELD
+  \foreach \i [evaluate={\y=-\RC+(\i-0.5)*(2*\RC)/\NE);}] in {1,...,\NE}{
+    \draw[EFieldLine={0.68},very thick] (0,\y) --++ (\D,0);
+  }
+  \node[Ecol,above] at (0.59*\D,0.9*\RC) {$\vb{E}$};
+  
+  % ANODE
+  \draw[anode,top color=red!90!black!20,bottom color=red!80!black!50]
+    (-\T,\RC) --++ (\T,0) arc (90:-90:\RC) --++ (-\T,0);
+  \draw[anode] (-\T,0) circle (\RC);
+  
+  % ANODE WIRE LEFT
+  \draw[metal]
+    (-\T,\RW) arc (90:-90:\RW) --++ (-\L,0) arc (-90:90:\RW) -- cycle;
+  
+  % SURFACE
+  \draw[gauss surf,very thin,fill opacity=0.3,gausscol2,
+        top color=gausscol2!20,bottom color=gausscol2!80!black!70]
+    %(-\T-\L,\RA) arc (90:-90:{1.2*(\T+\L+\RA)} and {\RA}) arc (-90:90:\RA);
+    (-\T-\L,1.006*\RA) to[out=-4,in=90,looseness=0.7] (\T+\RA,0) to[out=-90,in=4,looseness=0.7] (-\T-\L,-1.006*\RA) arc (-90:90:1.006*\RA);
+  \draw[gauss surf,thick]
+    (-\T-\L,0) circle (\RA);
+  \node[gausscol] at (-\T-\L-0.7*\RA,\RA) {$C$};
+  \node[gausscol!70] at (-\T-\L-0.6*\RA,-1.05*\RA) {$S_1$};
+  \node[gausscol2!70] at (-0.5*\RA,-1.05*\RA) {$S_2$};
+  \node[pluscol] at (0.7*\RC,-1.15*\RC) {$+Q$};
+  \node[minuscol] at (\D+0.7*\RC,-1.15*\RC) {$-Q$};
+  
+  % ANODE WIRE RIGHT
+  \draw[metal]
+    (-\T-\L,\RW) arc (90:-90:\RW) --++ (-\L,0) arc (-90:90:\RW) -- cycle;
+  \draw[mydashes,black!80,very thin]
+    (-\T-\L,0.94*\RW) arc (90:270:0.94*\RW);
+  \draw[metal]
+    (-\T-2*\L,0) circle (\RW);
+  
+  % CURRENT
+  \draw[current] (-\T-1.95*\L,1.7*\RW) --++ (0.7*\L,0) node[pos=0.4,above=-1] {$I$};
+  \draw[current] (\D+\RC+0.15*\L,1.7*\RW) --++ (0.7*\L,0) node[pos=0.4,above=-1] {$I$};
+  
+\end{tikzpicture}
+
+
+% CAPACITOR 3D - displacement current derivation (cylinder)
+\begin{tikzpicture}[xscale=0.3]
+  
+  \def\RC{1.2}     % radius capacitor
+  \def\RW{0.1*\RC} % radius wire
+  \def\RA{1.3}     % radius ampere loop
+  \def\D{3.5*\RA}  % distance between plates
+  \def\T{0.4}      % plate thickness
+  \def\L{2.6*\RA}  % wire length
+  \def\NE{5}       % number of electric field lines
+  \def\Sx{0.3*\D}  % x position S2
+  
+  % CATHODE WIRE
+  \draw[metal]
+    (\D+\T,\RW) --++ (\L,0) arc (90:-90:\RW) --++ (-\L,0);
+  
+  % CATHODE
+  \draw[cathode,top color=blue!90!black!30,bottom color=blue!80!black!50]
+    (\D,\RC) --++ (\T,0) arc (90:-90:\RC) --++ (-\T,0);
+  \draw[cathode] (\D,0) circle (\RC);
+  
+  % ELECTRIC FIELD
+  \foreach \i [evaluate={\y=-\RC+(\i-0.5)*(2*\RC)/\NE);}] in {1,...,\NE}{
+    \draw[EFieldLine={0.76},very thick] (0,\y) --++ (\D,0);
+  }
+  \node[Ecol,above] at (0.75*\D,0.88*\RC) {$\vb{E}$};
+  
+  % SURFACE S2
+  \draw[gauss surf,thick,fill opacity=0.2,gausscol2,
+        top color=gausscol2!20,bottom color=gausscol2!80!black!70]
+    (\Sx,0) circle (\RA);
+  \foreach \i [evaluate={\y=-\RC+(\i-0.5)*(2*\RC)/\NE);}] in {1,...,\NE}{
+    \draw[Ecol,very thick,line cap=round] (0,\y) --++ (\Sx,0);
+  }
+  
+  % ANODE
+  \draw[anode,top color=red!90!black!20,bottom color=red!80!black!50]
+    (-\T,\RC) --++ (\T,0) arc (90:-90:\RC) --++ (-\T,0);
+  \draw[anode] (-\T,0) circle (\RC);
+  
+  % ANODE WIRE LEFT
+  \draw[metal]
+    (-\T,\RW) arc (90:-90:\RW) --++ (-\L,0) arc (-90:90:\RW) -- cycle;
+  
+  % SURFACE S1
+  \draw[gauss surf,draw=none,fill opacity=0.25]
+     (\Sx-0.01,\RA) arc(90:-90:\RA) -- (-\T-\L,-\RA) arc(-90:90:\RA);
+  \draw[gausscol,thin]
+    (\Sx,\RA+0.007) -- (-\T-\L,\RA+0.007)
+    (\Sx,-\RA-0.007) -- (-\T-\L,-\RA-0.007);
+  \draw[gauss surf,thick]
+    (-\T-\L,0) circle (\RA);
+  \node[gausscol,left=0] at (-\T-\L,1.10*\RA) {$C_1$};
+  \node[gausscol2,right=-7] at (\Sx,1.14*\RA) {$C_2$};
+  %\node[gausscol!70] at (-\T-\L-0.6*\RA,-1.05*\RA) {$S_1$};
+  %\node[gausscol2!70] at (\Sx+0.2*\D,-1.05*\RA) {$S_2$};
+  \node[pluscol] at (-0.1*\D,-1.25*\RC) {$+Q$};
+  \node[minuscol] at (1.0*\D,-1.20*\RC) {$-Q$};
+  
+  % ANODE WIRE RIGHT
+  \draw[metal]
+    (-\T-\L,\RW) arc (90:-90:\RW) --++ (-\L,0) arc (-90:90:\RW) -- cycle;
+  \draw[mydashes,black!80,very thin]
+    (-\T-\L,0.94*\RW) arc (90:270:0.94*\RW);
+  \draw[metal]
+    (-\T-2*\L,0) circle (\RW);
+  
+  % CURRENT
+  \draw[current] (-\T-1.95*\L,1.7*\RW) --++ (0.8*\L,0) node[pos=0.4,above=-1] {$I$};
+  \draw[current] (\D+\RC+0.15*\L,1.7*\RW) --++ (0.8*\L,0) node[pos=0.4,above=-1] {$I$};
+  
+\end{tikzpicture}
+
+
+% CAPACITOR 3D - magnetic fields
+\begin{tikzpicture}[xscale=0.42]
+  
+  \def\RC{1.2}     % radius capacitor
+  \def\RW{0.1*\RC} % radius wire
+  \def\RA{1.6}     % radius ampere loop
+  \def\D{2.6*\RA}  % distance between plates
+  \def\T{0.4}      % plate thickness
+  \def\L{2*\RA}    % wire length
+  \def\NE{4}       % number of electric field lines
+  \def\NB{2}       % number of magnetic field lines
+  
+  % MAGNETIC FIELD LINES back
+  \foreach \x in {-0.5*\D,0.5*\D,1.6*\D}{
+    \foreach \i [evaluate={\r=\i*\RA/\NB);}] in {1,...,\NB}{
+      \draw[BFieldLine={0.35}] (\x,0) circle (\r);
+    }
+  }
+  
+  % CATHODE WIRE
+  \draw[metal]
+    (\D+\T,\RW) --++ (\L,0) arc (90:-90:\RW) --++ (-\L,0);
+  
+  % CATHODE
+  \draw[cathode,top color=blue!90!black!30,bottom color=blue!80!black!50]
+    (\D,\RC) --++ (\T,0) arc (90:-90:\RC) --++ (-\T,0);
+  \draw[cathode] (\D,0) circle (\RC);
+  
+  % ELECTRIC FIELD
+  \foreach \i [evaluate={\y=-\RC+(\i-0.5)*(2*\RC)/\NE);}] in {1,...,\NE}{
+    \draw[EFieldLine={0.6},very thick] (0,\y) --++ (\D,0);
+  }
+  \node[Ecol,above] at (0.52*\D,0.78*\RC) {$\vb{E}$};
+  \node[Bcol,above] at (0.20*\D,0.80*\RA) {$\vb{B}$};
+  
+  % ANODE
+  \draw[anode,top color=red!90!black!20,bottom color=red!80!black!50]
+    (-\T,\RC) --++ (\T,0) arc(90:-90:\RC) --++ (-\T,0);
+  \draw[anode] (-\T,0) circle (\RC);
+  
+  % ANODE WIRE LEFT
+  \draw[metal]
+    (-\T,\RW) arc (90:-90:\RW) --++ (-\L,0) arc (-90:90:\RW) -- cycle;
+  \draw[metal]
+    (-\T-\L,0) circle (\RW);
+  
+  % SURFACE
+  \node[pluscol] at (-0.1*\D,-1.2*\RC) {$+Q$};
+  \node[minuscol] at (1.0*\D,-1.2*\RC) {$-Q$};
+  
+  % CURRENT
+  \draw[current]
+    (-\T-0.95*\L,1.7*\RW) --++ (0.6*\L,0) node[pos=0.6,above=-1] {$I$};
+  \draw[current]
+    (\D+\RC+0.24*\L,1.7*\RW) --++ (0.6*\L,0) node[pos=0.35,above=-1] {$I$};
+  
+  % MAGNETIC FIELD LINES front
+  \foreach \x in {-0.5*\D,0.5*\D,1.6*\D}{
+    \foreach \i [evaluate={\r=\i*\RA/\NB);}] in {1,...,\NB}{
+      \draw[Bcol,thick] (\x,\r) arc(90:-90:\r);
+    }
+  }
+
+\end{tikzpicture}
+\end{document}
+```
+
+```tikz
+% Illustrating the attention mechanism from https://arxiv.org/abs/1706.03762.
+% Adapted from Petar Veličković: https://github.com/PetarV-/TikZ/tree/master/Self-attention.
+
+\documentclass[tikz]{standalone}
+
+\usetikzlibrary{positioning}
+
+\begin{document}
+\begin{tikzpicture}[shorten >=2pt, thick, ->]
+
+  \node (X1) {$\vec e_1$};
+  \node[rectangle, below=3ex of X1] (x_dots_1) {$\dots$};
+  \node[below=3ex of x_dots_1] (Xj) {$\vec e_j$};
+  \node[rectangle, below=3ex of Xj] (x_dots_2) {$\dots$};
+  \node[below=3ex of x_dots_2] (Xn) {$\vec e_n$};
+
+  \node[rectangle, draw, very thick, right=of X1] (attn_1) {$a_\phi$};
+  \node[rectangle, draw, very thick, right=of Xj] (attn_j) {$a_\phi$};
+  \node[rectangle, draw, very thick, right=of Xn] (attn_n) {$a_\phi$};
+
+  \draw (X1) edge (attn_1) (Xj) edge (attn_1);
+  \draw (Xj) edge (attn_j) ([xshift=3em]Xj) edge (attn_j);
+  \draw (Xj) edge (attn_n) (Xn) edge (attn_n);
+
+  \node[right=of attn_1, opacity=0.2] (alpha_1j) {$\alpha_{1j}$};
+  \node[right=of attn_j, opacity=1] (alpha_jj) {$\alpha_{jj}$};
+  \node[right=of attn_n, opacity=0.6] (alpha_nj) {$\alpha_{nj}$};
+
+  \node[circle, draw, right=of alpha_1j] (times_1) {$\times$};
+  \node[circle, draw, right=of alpha_jj] (times_j) {$\times$};
+  \node[circle, draw, right=of alpha_nj] (times_n) {$\times$};
+
+  \node[rectangle, draw, right=of times_j] (sum) {$\Sigma$};
+
+  \node[right=1em of sum] (x_tprim) {$\vec e_j'$};
+
+  \draw[opacity=0.2] (attn_1) -- (alpha_1j);
+  \draw[opacity=1] (attn_j) -- (alpha_jj);
+  \draw[opacity=0.6] (attn_n) -- (alpha_nj);
+
+  \draw (X1) edge[bend right] node[rectangle, draw, fill=white, midway] {$f_\psi$} (times_1);
+  \draw (Xj) edge[bend right] node[rectangle, draw, fill=white, midway] {$f_\psi$} (times_j);
+  \draw (Xn) edge[bend right] node[rectangle, draw, fill=white, midway] {$f_\psi$} (times_n);
+
+  \draw (times_1) edge (sum) (times_j) edge (sum) (times_n) edge (sum);
+
+  \draw[opacity=0.2] (alpha_1j) -- (times_1);
+  \draw[opacity=1] (alpha_jj) -- (times_j);
+  \draw[opacity=0.6] (alpha_nj) -- (times_n);
+
+  \draw (sum) -- (x_tprim);
+
+\end{tikzpicture}
+\end{document}
+```
+
+```tikz
+\documentclass[a3,convert]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{smithchart}    
+\usepgfplotslibrary{polar}   
+\usepackage{siunitx} 
+\pgfplotsset{compat=1.13}
+
+\begin{document}
+
+    \begin{tikzpicture}
+      \pgfmathsetmacro{\xoffset}{10.45*(1-cos(3))-1.25}  
+      \pgfmathsetmacro{\yoffset}{sin(3)*10.45+9.2}  
+      \draw[,thick,->] (+\xoffset,\yoffset) arc [radius=10.45cm,start angle=177,end angle=166];
+      \pgfmathsetmacro{\xoffset}{10.45*(1-cos(18))-1.25}  
+      \pgfmathsetmacro{\yoffset}{sin(18)*10.45+9.2} 
+      \draw[,draw=none] (+\xoffset,\yoffset) arc [radius=10.45cm,start angle=162,end angle=144] node[midway,sloped]{towards};
+      \pgfmathsetmacro{\xoffset}{10.45*(1-cos(36))-1.25}  
+      \pgfmathsetmacro{\yoffset}{sin(36)*10.45+9.2} 
+      \draw[,draw=none] (+\xoffset,\yoffset) arc [radius=10.45cm,start angle=144,end angle=126] node[midway,sloped]{generator};
+
+      \pgfmathsetmacro{\xoffset}{9.95*(1-cos(-3))-0.75}  
+      \pgfmathsetmacro{\yoffset}{sin(-3)*9.95+9.2} 
+      \draw[,thick,->] (\xoffset,\yoffset) arc [radius=9.95cm,start angle=183,end angle=193] ;
+      \pgfmathsetmacro{\xoffset}{9.95*(1-cos(-18))-0.75}  
+      \pgfmathsetmacro{\yoffset}{sin(-18)*9.95+9.2} 
+      \draw[,draw=none] (+\xoffset,\yoffset) arc [radius=10.45cm,start angle=198,end angle=216] node[midway,sloped]{towards};
+      \pgfmathsetmacro{\xoffset}{9.95*(1-cos(-36))-0.75}  
+      \pgfmathsetmacro{\yoffset}{sin(-36)*9.95+9.2} 
+      \draw[,draw=none] (+\xoffset,\yoffset) arc [radius=10.45cm,start angle=216,end angle=234] node[midway,sloped]{load};
+
+
+    \begin{polaraxis}[
+                      rotate=180,
+                      width=23cm,
+                      xshift=1.5cm, 
+                      yshift=1.5cm,
+                      %xticklabels={$0\lambda$,$0.05\lambda$,$0.1\lambda$,$0.15\lambda$,$0.2\lambda$,$0.25\lambda$},
+                      xticklabel style={
+                          sloped like x axis={%
+                              execute for upside down={\tikzset{anchor=south}},
+                              reset nontranslations=false
+                          },
+                          anchor=north,
+                      },
+                      xticklabel={\small\pgfmathparse{0.5-\tick/720}\pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}$\lambda$},
+                      xtick align=center,
+                      xtick={0,18,...,360},
+                      grid=none,
+                      axis y line = none,
+                      minor x tick num={4},
+                      ymax=1,
+                     ]   
+   \end{polaraxis}
+
+    \begin{polaraxis}[
+                      rotate=180,
+                      width=22cm,
+                      xshift=1cm, 
+                      yshift=1cm,
+                      %xticklabels={$0\lambda$,$0.05\lambda$,$0.1\lambda$,$0.15\lambda$,$0.2\lambda$,$0.25\lambda$},
+                      xticklabel style={
+                          sloped like x axis={%
+                              execute for upside down={\tikzset{anchor=south}},
+                              reset nontranslations=false
+                          },
+                          anchor=north,
+                      },
+                      xticklabel={\small\pgfmathparse{\tick/720}\pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}$\lambda$},
+                      xtick align=center,
+                      xtick={0,18,...,360},
+                      grid=none,
+                      axis y line = none,
+                      minor x tick num={4},
+                      ymax=1,
+                     ]    
+
+    \end{polaraxis}
+
+
+
+    \begin{polaraxis}[
+                      width=21cm,
+                      xshift=-0.5cm, 
+                      yshift=-0.5cm,
+                      %xticklabels={$0\lambda$,$0.05\lambda$,$0.1\lambda$,$0.15\lambda$,$0.2\lambda$,$0.25\lambda$},
+                      xticklabel style={
+                          sloped like x axis={%
+                              execute for upside down={\tikzset{anchor=north}},
+                              reset nontranslations=false
+                          },
+                          anchor=south,
+                      },
+                      xticklabel={\small\pgfmathprintnumber{\tick}\si{\degree}},
+                      xtick align=center,
+                      grid=none,
+                      axis y line = none,
+                     ]    
+   \end{polaraxis}
+
+   \begin{smithchart}[
+                      show origin,
+                      width=20cm,
+                     ]
+   \addplot[mark=none,line width=2]
+       coordinates{
+           (1, 0) (1, 0.1) (1,0.2) (1,0.3) (1,0.4) (1,0.5) (1,0.5)
+       };
+   \addplot[mark=none,line width=0.5]
+       coordinates{
+           (1, 0) (-0.3, 0)  % this one is not drawn outside!!!
+       };
+   \end{smithchart}
+   \end{tikzpicture} 
+
+
+\end{document}
+```
