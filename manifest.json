@@ -1,9 +1,9 @@
 {
 	"id": "obsidian-kroki",
 	"name": "Kroki",
-	"version": "1.3.0",
+	"version": "1.3.1",
 	"minAppVersion": "0.13.25",
-	"description": "Render Mermaid, PlantUML, GraphViz, D2, Excalidraw, Vega, Pikchr, WireViz, Structurizr and many others diagrams using Kroki",
+	"description": "Render Mermaid, PlantUML, GraphViz, D2, Excalidraw, Vega, Pikchr, WireViz, Structurizr and many others diagrams using Kroki.",
 	"author": "Greg Zuro",
 	"authorUrl": "https://github.com/gregzuro/",
 	"isDesktopOnly": false
