@@ -1,6 +1,68 @@
-.settings_area {
-    margin-left: 5px;
-    margin-right: 5px;
-    font-size: 14px;
+.kroki-diagram {
+    display: flex;
+    justify-content: center;
+}
+
+.kroki-diagram > svg,
+.kroki-diagram > img {
+    max-width: 100%;
+    height: auto;
+}
+
+.kroki-diagram.kroki-bg-white {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.kroki-error {
+    color: var(--text-error);
+    font-family: var(--font-monospace);
+    font-size: var(--font-ui-smaller);
+    white-space: pre-wrap;
+}
+
+.kroki-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    font-size: var(--font-ui-smaller);
+    opacity: 0.5;
+}
+
+.kroki-actions:hover {
+    opacity: 1;
+}
+
+.kroki-settings-textarea {
     width: 100%;
+    font-size: 14px;
+}
+
+/* A diagram-type settings card that includes its own header input.
+   Let the standard row (name + toggle + block-name) wrap so the header
+   row below it occupies the full width of the card. */
+.setting-item.kroki-with-header {
+    flex-wrap: wrap;
+}
+
+.kroki-header-row {
+    flex: 1 0 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.kroki-header-label {
+    font-size: var(--font-ui-smaller);
+    color: var(--text-muted);
+}
+
+.kroki-header-textarea {
+    width: 100%;
+    min-height: 60px;
+    font-family: var(--font-monospace);
+    font-size: var(--font-ui-smaller);
+    resize: vertical;
 }

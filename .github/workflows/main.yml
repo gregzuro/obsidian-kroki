@@ -7,13 +7,21 @@ on:
     branches: [master]
 
 jobs:
-  lint-and-test:
+  lint-and-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Install modules
-        run: yarn
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Lint
-        run: yarn run lint
+        run: npm run lint
+
+      - name: Build (tsc + esbuild)
+        run: npm run build

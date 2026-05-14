@@ -12,3 +12,7 @@ main.js
 
 # data / settings
 data.json
+
+# nix / direnv
+.direnv
+result

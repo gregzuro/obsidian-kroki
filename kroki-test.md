@@ -602,6 +602,7 @@ Ditaa
 ```
 
 Diagrams.net
+> ⚠️ Disabled by default. Requires a self-hosted Kroki with the `yuzutech/kroki-diagramsnet` companion image — the public `kroki.io` server does **not** include it and will return `Error 503: Connection refused`.
 ```diagramsnet
 <mxfile host="Electron" modified="2022-03-26T10:52:07.381Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/17.2.1 Chrome/96.0.4664.174 Electron/16.1.0 Safari/537.36" etag="c7rPkDjiJFuVDdgIdBCQ" version="17.2.1" type="device">
   <diagram id="is4nKnoC7knK3tbmEpOL" name="ページ1">
@@ -1434,7 +1435,7 @@ digraph D {
 }
 ```
 
-Mermaid
+Mermaid (Disabled by default - see plugin settings.)
 ```kroki-mermaid
 graph TD 
   A[ Anyone ] -->|Can help | B( Go to github.com/yuzutech/kroki )
@@ -1521,7 +1522,7 @@ line right until even with X9 - ($r,0) \
   then up until even with X9 then to X9
 ```
   
-PlantUML
+PlantUML (Disabled by default - see plugin settings.)
 ```kroki-plantuml
 Bob -> Alice : hello [[https://www.google.com]]
 Alice -> Wander: hello
@@ -1546,12 +1547,65 @@ Svgbob
                                 /::::/ |__| 
 ```
 
-UMlet (https://gitter.im/kroki-project/community?at=5fa9255d7cac87158f96c750)
+UMlet
 ```umlet
-<?xml version="1.0" encoding="UTF-8"?><umlet_diagram><element><type>com.umlet.element.base.Class</type><coordinates><x>80</x><y>250</y><w>110</w><h>40</h></coordinates><panel_attributes>&lt;&lt;artefact&gt;&gt;
-Name</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Artefact</type><coordinates><x>80</x><y>180</y><w>110</w><h>50</h></coordinates><panel_attributes>Name</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>20</x><y>20</y><w>250</w><h>330</h></coordinates><panel_attributes>&gt;&lt;&lt;device&gt;&gt;
-&gt;Server</panel_attributes><additional_attributes></additional_attributes></element><element><type>com.umlet.element.custom.Node</type><coordinates><x>40</x><y>100</y><w>200</w><h>220</h></coordinates><panel_attributes>&gt;&lt;&lt;execution environment&gt;&gt;
-&gt;AppServer</panel_attributes><additional_attributes></additional_attributes></element></umlet_diagram>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umletino" version="14.4.0-SNAPSHOT">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>30</x><y>30</y><w>220</w><h>120</h></coordinates>
+    <panel_attributes>Connection
+--
++ from: Location
++ to: Location
++/ dep: Time
++/ arr: Time
+- status: String = "planned"
+--
++add(cp: ConnectionPart [0..*])</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>30</x><y>250</y><w>220</w><h>80</h></coordinates>
+    <panel_attributes>ConnectionPart
+--
++ flightNo: String {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>330</x><y>30</y><w>200</w><h>100</h></coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+TravelHandling
+--
++/ delay: Minutes
++ numOfBag: int = 0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates><x>330</x><y>250</y><w>200</w><h>40</h></coordinates>
+    <panel_attributes>for all cp in cps: addOne(cp)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>130</x><y>140</y><w>40</w><h>130</h></coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..*
+r1=cp</panel_attributes>
+    <additional_attributes>10;10;10;110</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>240</x><y>60</y><w>110</w><h>40</h></coordinates>
+    <panel_attributes>lt=-&gt;
+r2=handles</panel_attributes>
+    <additional_attributes>10;20;90;20</additional_attributes>
+  </element>
+</diagram>
 ```
 
 Vega
@@ -1851,4 +1905,64 @@ connections:
   -
     - X1: 5
     - W1: s
+```
+
+DBML
+```dbml
+Table users {
+  id integer
+  username varchar
+  role varchar
+  created_at timestamp
+}
+
+Table posts {
+  id integer [primary key]
+  title varchar
+  body text [note: 'Content of the post']
+  user_id integer
+  status post_status
+  created_at timestamp
+}
+
+Enum post_status {
+  draft
+  published
+  private [note: 'visible via URL only']
+}
+
+Ref: posts.user_id > users.id // many-to-one
+```
+
+Symbolator
+```symbolator
+module demo_device #(
+    //# {{}}
+    parameter SIZE = 8,
+    parameter RESET_ACTIVE_LEVEL = 1
+) (
+    //# {{clocks|Clocking}}
+    input wire clock,
+    //# {{control|Control signals}}
+    input wire reset,
+    input wire enable,
+    //# {{data|Data ports}}
+    input wire [SIZE-1:0] data_in,
+    output wire [SIZE-1:0] data_out
+);
+endmodule
+```
+
+TikZ
+```tikz
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+  \draw[thick,->] (0,0) -- (4,0) node[anchor=north west] {x axis};
+  \draw[thick,->] (0,0) -- (0,4) node[anchor=south east] {y axis};
+  \draw[blue,thick] (0,0) -- (3,2) node[anchor=south west] {$\vec{u}$};
+  \draw[red,thick] plot[domain=0:0.588,smooth] ({2*cos(\x r)},{2*sin(\x r)});
+\end{tikzpicture}
+\end{document}
 ```
