@@ -51,7 +51,7 @@ Specify your diagram code inside the codeblock.
 
 On desktop the diagram is rendered as inline SVG, so links inside the diagram (e.g. GraphViz `URL=` nodes) stay clickable. On mobile, and as a fallback if the SVG can't be fetched, it is rendered as an `<img>`.
 
-Below each diagram there are two small links: **PNG** downloads a PNG of the diagram, and **Edit** opens it in [niolesk](https://niolesk.top/).
+Below each diagram there are two small links: **PNG** downloads a PNG of the diagram, and **Edit** opens it in [niolesk](https://niolesk.top/). The PNG link is omitted for diagram types whose Kroki server doesn't generate PNG output (BPMN, Bytefield, D2, DBML, Excalidraw, Nomnoml, Pikchr, Svgbob, Symbolator, WaveDrom).
 
 ### Including diagram source from a file
 

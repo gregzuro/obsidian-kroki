@@ -132,6 +132,25 @@ const HEADER_SUPPORTED_TYPES = new Map<string, HeaderTypeSpec>([
 	],
 ]);
 
+/**
+ * Kroki diagram types (by `krokiBlockName`) for which the `/png/` endpoint
+ * returns 404/400 — verified against the live `kroki.io` support matrix and
+ * by probing each endpoint. We omit the PNG download link for these to avoid
+ * pointing users at a broken URL.
+ */
+const PNG_UNSUPPORTED_TYPES = new Set<string>([
+	"bpmn",
+	"bytefield",
+	"d2",
+	"dbml",
+	"excalidraw",
+	"nomnoml",
+	"pikchr",
+	"svgbob",
+	"symbolator",
+	"wavedrom",
+]);
+
 export default class KrokiPlugin extends Plugin {
 	settings: KrokiSettings;
 
@@ -195,7 +214,8 @@ export default class KrokiPlugin extends Plugin {
 				const doc = new DOMParser().parseFromString(text, "image/svg+xml");
 				if (!doc.querySelector("parsererror") && doc.documentElement.tagName.toLowerCase() === "svg") {
 					// Inline SVG preserves clickable <a xlink:href> links / imagemaps inside the diagram.
-					fig.appendChild(document.importNode(doc.documentElement, true));
+					// `activeDocument` (Obsidian global) follows popout windows — see settings tab below.
+					fig.appendChild(activeDocument.importNode(doc.documentElement, true));
 					rendered = true;
 				} else {
 					// Non-SVG body — most often Kroki returned the syntax error as plaintext.
@@ -214,8 +234,14 @@ export default class KrokiPlugin extends Plugin {
 		}
 
 		const actions = el.createDiv({ cls: "kroki-actions" });
-		actions.createEl("a", { text: "PNG", href: pngUrl, attr: { download: "" } });
-		actions.createEl("a", { text: "Edit", href: `https://niolesk.top/#${pngUrl}` });
+		// PNG download is only offered for types whose /png/ endpoint actually works
+		// on Kroki — see PNG_UNSUPPORTED_TYPES. The Edit link uses the SVG URL since
+		// niolesk decodes the source from the encoded fragment regardless of format,
+		// and SVG is the one URL that's valid for every Kroki diagram type.
+		if (!PNG_UNSUPPORTED_TYPES.has(krokiType)) {
+			actions.createEl("a", { text: "PNG", href: pngUrl, attr: { download: "" } });
+		}
+		actions.createEl("a", { text: "Edit", href: `https://niolesk.top/#${svgUrl}` });
 	};
 
 	async onload(): Promise<void> {
@@ -266,7 +292,9 @@ class KrokiSettingsTab extends PluginSettingTab {
 	}
 
 	private linkFragment(url: string): DocumentFragment {
-		const fragment = document.createDocumentFragment();
+		// `activeDocument` (Obsidian-provided) tracks the currently-focused window, so the
+		// fragment still works when the settings tab is hosted in a popout.
+		const fragment = activeDocument.createDocumentFragment();
 		fragment.createEl("a", { text: url, href: url });
 		return fragment;
 	}
@@ -275,7 +303,8 @@ class KrokiSettingsTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName("General").setHeading();
+		// Obsidian's settings guide recommends skipping a "General" heading at the top —
+		// the first rows just sit directly under the tab title.
 
 		new Setting(containerEl)
 			.setName("Server URL")
@@ -335,9 +364,13 @@ class KrokiSettingsTab extends PluginSettingTab {
 					attr: { placeholder: headerSpec.example, rows: "3", spellcheck: "false" },
 				});
 				ta.value = this.plugin.settings.headers[diagramType.krokiBlockName] ?? "";
-				ta.addEventListener("input", async () => {
-					this.plugin.settings.headers[diagramType.krokiBlockName] = ta.value;
-					await this.plugin.saveSettings();
+				ta.addEventListener("input", () => {
+					// `addEventListener` expects a `void`-returning callback. Kick the save off
+					// without awaiting it so we don't hand the DOM a dangling Promise.
+					void (async () => {
+						this.plugin.settings.headers[diagramType.krokiBlockName] = ta.value;
+						await this.plugin.saveSettings();
+					})();
 				});
 			}
 		}

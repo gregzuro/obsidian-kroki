@@ -13,6 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # Required for `actions/attest-build-provenance` to mint and upload
+      # the artifact attestation that proves these binaries came from this
+      # workflow run.
+      id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@v4
 
@@ -20,12 +25,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build (tsc + esbuild)
         run: npm run build
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -34,6 +48,11 @@ jobs:
           name: ${{ github.ref_name }}
           draft: false
           prerelease: false
+          # Use the per-tag notes checked into the repo; fall back to
+          # auto-generated commit notes if RELEASE_NOTES.md is missing.
+          body_path: RELEASE_NOTES.md
+          generate_release_notes: true
+          fail_on_unmatched_files: true
           files: |
             main.js
             manifest.json
